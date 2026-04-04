@@ -219,3 +219,37 @@ begin
   return v_reversal_id;
 end;
 $$;
+
+-- RLS hardening (service role still bypasses these policies)
+alter table users enable row level security;
+alter table financial_records enable row level security;
+alter table user_sessions enable row level security;
+alter table audit_logs enable row level security;
+
+drop policy if exists users_no_direct_access on users;
+create policy users_no_direct_access on users
+  for all
+  to anon, authenticated
+  using (false)
+  with check (false);
+
+drop policy if exists records_no_direct_access on financial_records;
+create policy records_no_direct_access on financial_records
+  for all
+  to anon, authenticated
+  using (false)
+  with check (false);
+
+drop policy if exists sessions_no_direct_access on user_sessions;
+create policy sessions_no_direct_access on user_sessions
+  for all
+  to anon, authenticated
+  using (false)
+  with check (false);
+
+drop policy if exists audit_no_direct_access on audit_logs;
+create policy audit_no_direct_access on audit_logs
+  for all
+  to anon, authenticated
+  using (false)
+  with check (false);
