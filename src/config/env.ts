@@ -37,7 +37,7 @@ if (!parsedEnv.success) {
 
   throw new Error(
     `Invalid environment variables: ${missingOrInvalid}. ` +
-      "Create server/.env from server/.env.example and set required values."
+      "Create .env from .env.example and set required values."
   );
 }
 
