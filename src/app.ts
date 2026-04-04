@@ -3,30 +3,25 @@ import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
 
+import { errorHandler } from "./middlewares/error-handler.js";
+import { notFoundHandler } from "./middlewares/not-found.js";
+import { apiRouter } from "./routes/index.js";
+
 export const app = express();
 
 app.disable("x-powered-by");
+
 app.use(helmet());
-app.use(cors());
+app.use(
+  cors({
+    origin: true,
+    credentials: true
+  })
+);
 app.use(morgan("dev"));
 app.use(express.json());
 
-app.get("/api/health", (_req, res) => {
-  res.status(200).json({
-    success: true,
-    data: {
-      status: "ok",
-      timestamp: new Date().toISOString()
-    }
-  });
-});
+app.use("/api", apiRouter);
 
-app.use((_req, res) => {
-  res.status(404).json({
-    success: false,
-    error: {
-      code: "NOT_FOUND",
-      message: "Route not found"
-    }
-  });
-});
+app.use(notFoundHandler);
+app.use(errorHandler);
