@@ -33,7 +33,7 @@ Backend API for the assignment using Express, TypeScript, and Supabase Postgres.
 6. Start server:
    - `npm run dev`
 
-Base URL: `http://localhost:4000/api`
+Base URL: `http://localhost:4000`
 
 ## Demo users
 - `admin@student.local / admin123`
@@ -41,15 +41,17 @@ Base URL: `http://localhost:4000/api`
 - `viewer@student.local / viewer123`
 
 ## Key endpoints
-- `POST /api/auth/login`
-- `POST /api/auth/logout`
-- `GET /api/auth/me`
-- `GET /api/users` (admin)
-- `POST /api/users` (admin)
-- `PATCH /api/users/:id` (admin)
-- `GET /api/records` (analyst/admin)
-- `POST /api/records` (admin)
-- `PATCH /api/records/:id` (admin)
-- `DELETE /api/records/:id` (admin)
-- `POST /api/records/:id/revert` (admin)
-- `GET /api/dashboard/summary` (viewer/analyst/admin)
+- `GET /health`
+- `POST /auth/login`
+- `POST /auth/logout`
+- `GET /auth/me`
+- `GET /users` (admin)
+- `POST /users` (admin)
+- `PATCH /users/:id` (admin)
+- `GET /records` (analyst/admin)
+- `GET /records/:id` (analyst/admin)
+- `POST /records` (admin)
+- `PATCH /records/:id` (admin)
+- `DELETE /records/:id` (admin)
+- `POST /records/:id/revert` (admin)
+- `GET /dashboard/summary` (viewer/analyst/admin)

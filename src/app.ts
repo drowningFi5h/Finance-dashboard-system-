@@ -1,24 +1,13 @@
 import cors from "cors";
 import express from "express";
 import morgan from "morgan";
-import type { Router } from "express";
 
 import { errorHandler } from "./middlewares/error-handler.js";
 import { notFoundHandler } from "./middlewares/not-found.js";
+import { apiRouter } from "./routes/index.js";
 
 export const app = express();
 export default app;
-
-let apiRouter: Router | null = null;
-let startupError: string | null = null;
-
-try {
-  const routesModule = await import("./routes/index.js");
-  apiRouter = routesModule.apiRouter;
-} catch (error) {
-  startupError = error instanceof Error ? error.message : "Unknown startup error";
-  console.error("API router failed to initialize", error);
-}
 
 app.disable("x-powered-by");
 
@@ -44,31 +33,7 @@ app.use(
 app.use(morgan("dev"));
 app.use(express.json());
 
-if (apiRouter) {
-  app.use("/", apiRouter);
-} else {
-  app.get("/health", (_req, res) => {
-    res.status(200).json({
-      success: true,
-      data: {
-        status: "degraded",
-        message: "Server is up but API dependencies are not configured",
-        startupError
-      }
-    });
-  });
-
-  app.use("/", (_req, res) => {
-    res.status(500).json({
-      success: false,
-      error: {
-        code: "STARTUP_CONFIG_ERROR",
-        message: "Backend failed to initialize required configuration",
-        details: startupError
-      }
-    });
-  });
-}
+app.use("/", apiRouter);
 
 app.use(notFoundHandler);
 app.use(errorHandler);
