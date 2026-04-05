@@ -1,6 +1,6 @@
 import cors from "cors";
 import express from "express";
-import helmetImport from "helmet";
+import helmet from "helmet";
 import morgan from "morgan";
 
 import { errorHandler } from "./middlewares/error-handler.js";
@@ -8,8 +8,7 @@ import { notFoundHandler } from "./middlewares/not-found.js";
 import { apiRouter } from "./routes/index.js";
 
 export const app = express();
-
-const helmet = (helmetImport as unknown as { default?: typeof helmetImport }).default ?? helmetImport;
+app.use(helmet());
 
 app.disable("x-powered-by");
 
