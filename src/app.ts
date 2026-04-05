@@ -45,9 +45,9 @@ app.use(morgan("dev"));
 app.use(express.json());
 
 if (apiRouter) {
-  app.use("/api", apiRouter);
+  app.use("/", apiRouter);
 } else {
-  app.get("/api/health", (_req, res) => {
+  app.get("/health", (_req, res) => {
     res.status(200).json({
       success: true,
       data: {
@@ -58,7 +58,7 @@ if (apiRouter) {
     });
   });
 
-  app.use("/api", (_req, res) => {
+  app.use("/", (_req, res) => {
     res.status(500).json({
       success: false,
       error: {
