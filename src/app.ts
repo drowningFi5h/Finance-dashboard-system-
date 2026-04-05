@@ -7,6 +7,7 @@ import { errorHandler } from "./middlewares/error-handler.js";
 import { notFoundHandler } from "./middlewares/not-found.js";
 
 export const app = express();
+export default app;
 
 let apiRouter: Router | null = null;
 let startupError: string | null = null;
