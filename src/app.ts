@@ -8,7 +8,6 @@ import { notFoundHandler } from "./middlewares/not-found.js";
 import { apiRouter } from "./routes/index.js";
 
 export const app = express();
-app.use(helmet());
 
 app.disable("x-powered-by");
 
